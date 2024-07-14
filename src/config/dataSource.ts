@@ -8,7 +8,7 @@ export const AppDataSource = new DataSource({
   host: "localhost",
   port: 3306,
   username: "root",
-  password: "Jl!24453687",
+  password: "*********",
   database: "bd_alura_typescript",
   synchronize: true,
   logging: true,
