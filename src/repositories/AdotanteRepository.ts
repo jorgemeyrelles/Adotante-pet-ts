@@ -58,6 +58,7 @@ export default class AdotanteRepository implements InterfaceAdotanteRepository {
   ): Promise<{ success: boolean; message?: string; }> {
     try {
       const adotante = await this.repository.findOne({ where: { id: idAdotante } });
+      
       if (!adotante) {
         return { success: false, message: "Adotante não encontrado" };
       }

@@ -1,7 +1,9 @@
-import { Router } from "express";
+import { RequestHandler, Router } from "express";
 import AdotanteRepository from "../repositories/AdotanteRepository";
 import { AppDataSource } from "../config/dataSource";
 import AdotanteController from "../controllers/AdotanteController";
+import { middlewareValidatorBodyAdotante } from "../middleware/validators/AdotanteReqBody";
+import { middlewareValidatorBodyEndereco } from "../middleware/validators/EnderecoReqBody";
 
 const router = Router();
 
@@ -11,10 +13,22 @@ const adotanteRepository = new AdotanteRepository(
 
 const adotanteController = new AdotanteController(adotanteRepository);
 
-router.post("/", (req, res) => adotanteController.criaAdotante(req, res));
+const validatorBodyAdotante: RequestHandler =
+  (req, res, next) => middlewareValidatorBodyAdotante(req, res, next);
+
+const validatorBodyEndereco: RequestHandler =
+  (req, res, next) => middlewareValidatorBodyEndereco(req, res, next);
+
+router.post("/",
+  validatorBodyAdotante,
+  (req, res) => adotanteController.criaAdotante(req, res)
+);
 router.get("/", (req, res) => adotanteController.listaAdotante(req, res));
 router.put("/:id", (req, res) => adotanteController.atualizaAdotante(req, res));
 router.delete("/:id", (req, res) => adotanteController.deleteAdotante(req, res));
-router.patch("/:id", (req, res) => adotanteController.atualizaEnderecoAdotante(req, res));
+router.patch("/:id",
+  validatorBodyEndereco,
+  (req, res) => adotanteController.atualizaEnderecoAdotante(req, res)
+);
 
 export default router;

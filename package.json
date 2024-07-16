@@ -28,6 +28,7 @@
     "reflect-metadata": "^0.2.2",
     "tsc-watch": "^6.0.4",
     "typeorm": "^0.3.20",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "yup-locale-pt": "^0.0.9"
   }
 }

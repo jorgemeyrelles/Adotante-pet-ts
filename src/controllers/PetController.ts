@@ -38,7 +38,12 @@ export default class PetController {
   ) {
     const all = await this.repository.listaPet();
     const data = all
-      .map(({ id, nome, especie, porte }) => ({ id, nome, especie, porte }));
+      .map(({ id, nome, especie, porte }) => ({
+        id,
+        nome,
+        especie,
+        porte: porte === null ? undefined : porte
+      }));
     return res.status(200).json({ data });
   }
 

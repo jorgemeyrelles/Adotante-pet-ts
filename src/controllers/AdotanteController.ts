@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import AdotanteRepository from "../repositories/AdotanteRepository";
 import AdotanteEntity from "../entities/AdotanteEntity";
 import EnderecoEntity from "../entities/EnderecoEntity";
-import { TipoReqBodyAdotante, TipoReqParamsAdotante, TipoResBodyAdotante } from "../types/TipoAdotante";
+import {
+  TipoReqBodyAdotante,
+  TipoReqParamsAdotante,
+  TipoResBodyAdotante
+} from "../types/TipoAdotante";
 
 export default class AdotanteController {
   constructor(private repository: AdotanteRepository) {}
@@ -21,14 +25,27 @@ export default class AdotanteController {
     );
 
     await this.repository.criaAdotante(novoAdotante);
-    return res.status(201).json({ data: { id: novoAdotante.id, celular, nome } });
+    return res.status(201).json({
+      data: {
+        id: novoAdotante.id,
+        celular,
+        nome,
+        endereco
+      }
+    });
   }
   async listaAdotante(
-    req: Request<TipoReqParamsAdotante, {}, TipoReqBodyAdotante>,
+    req: Request,
     res: Response<TipoResBodyAdotante>
   ) {
     const resp = await this.repository.listaAdotante();
-    const all = resp.map(({ id, nome, celular }) => ({ id, nome, celular }));
+    const all = resp
+      .map(({ id, nome, celular, endereco }) => ({
+        id,
+        nome,
+        celular,
+        endereco: endereco === null ? undefined : endereco
+      }));
     return res.status(200).json({ data: all });
   }
   async atualizaAdotante(
@@ -57,12 +74,13 @@ export default class AdotanteController {
     return res.sendStatus(204);
   }
   async atualizaEnderecoAdotante(
-    req: Request<TipoReqParamsAdotante, {}, TipoReqBodyAdotante>,
+    req: Request<TipoReqParamsAdotante, {}, EnderecoEntity>,
     res: Response<TipoResBodyAdotante>
   ) {
     const { id } = req.params;
+    
     const { success, message } = await this.repository
-      .atualizaEnderecoAdotante(Number(id), <EnderecoEntity>req.body.endereco);
+      .atualizaEnderecoAdotante(Number(id), req.body);
     if (!success) {
       return res.status(404).json({ error: message });
     }
