@@ -7,7 +7,7 @@ import { NotFound } from "../utils/manipulaErrors";
 export default class AdotanteRepository implements InterfaceAdotanteRepository {
   constructor(private repository: Repository<AdotanteEntity>) {}
   criaAdotante(adotante: AdotanteEntity): void | Promise<void> {
-      this.repository.save(adotante);
+    this.repository.save(adotante);
   }
   async listaAdotante(): Promise<AdotanteEntity[]> {
     return await this.repository.find();
