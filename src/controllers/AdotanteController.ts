@@ -14,11 +14,19 @@ export default class AdotanteController {
     req: Request<{}, {}, TipoReqBodyAdotante>,
     res: Response<TipoResBodyAdotante>
   ) {
-    const { nome, celular, endereco, foto, senha } = <AdotanteEntity>req.body;
+    const {
+      nome,
+      email,
+      celular,
+      endereco,
+      foto,
+      senha
+    } = <AdotanteEntity>req.body;
 
     const novoAdotante = new AdotanteEntity(
       nome,
       senha,
+      email,
       celular,
       foto,
       endereco
@@ -28,6 +36,7 @@ export default class AdotanteController {
     return res.status(201).json({
       data: {
         id: novoAdotante.id,
+        email,
         celular,
         nome,
         endereco
@@ -40,9 +49,10 @@ export default class AdotanteController {
   ) {
     const resp = await this.repository.listaAdotante();
     const all = resp
-      .map(({ id, nome, celular, endereco }) => ({
+      .map(({ id, nome, email, celular, endereco }) => ({
         id,
         nome,
+        email,
         celular,
         endereco: endereco === null ? undefined : endereco
       }));
@@ -54,11 +64,8 @@ export default class AdotanteController {
   ) {
     const { id } = req.params;
 
-    const { success, message } = await this.repository
+    await this.repository
       .atualizaAdotante(Number(id), <AdotanteEntity>req.body);
-    if (!success) {
-      return res.status(401).json({ error: message });
-    }
 
     return res.sendStatus(204);
   }
@@ -67,10 +74,8 @@ export default class AdotanteController {
     res: Response<TipoResBodyAdotante>
   ) {
     const { id } = req.params;
-    const { success, message } = await this.repository.deletaAdotante(Number(id));
-    if (!success) {
-      return res.status(404).json({ error: message });
-    }
+    await this.repository.deletaAdotante(Number(id));
+
     return res.sendStatus(204);
   }
   async atualizaEnderecoAdotante(
@@ -79,11 +84,9 @@ export default class AdotanteController {
   ) {
     const { id } = req.params;
     
-    const { success, message } = await this.repository
+    await this.repository
       .atualizaEnderecoAdotante(Number(id), req.body);
-    if (!success) {
-      return res.status(404).json({ error: message });
-    }
+
     return res.sendStatus(204);
   }
 }

@@ -19,13 +19,7 @@ export default class PetController {
     res: Response<TipoResPet>
   ) {
     const { adotado, especie, porte, dataNascimento, nome } = <PetEntity>req.body;
-    
-    if (!Object.values(EnumEspecie).includes(especie)) {
-      return res.status(404).json({ error: "Espécie inválida" });
-    }
-    if (porte && !(porte in EnumPorte)) {
-      return res.status(404).json({ error: "Porte inválido" });
-    }
+
     const novoPet = new PetEntity(nome, especie, dataNascimento, adotado, porte);
 
     await this.repository.criaPet(novoPet);
@@ -53,11 +47,9 @@ export default class PetController {
   ) {
     const { id } = req.params;
 
-    const { success, message } = await this.repository
+    await this.repository
       .atualizaPet(Number(id), <PetEntity>req.body);
-    if (!success) {
-      return res.status(404).json({ error: message });
-    }
+
     return res.sendStatus(200);
   }
 
@@ -66,11 +58,9 @@ export default class PetController {
     res: Response<TipoResPet>
   ) {
     const { id } = req.params;
-    const { success, message } = await this.repository
+    await this.repository
       .deletePet(Number(id), <PetEntity>req.body);
-    if (!success) {
-      return res.status(404).json({ error: message });
-    }
+
     return res.sendStatus(200);
   }
 
@@ -79,11 +69,9 @@ export default class PetController {
     res: Response<TipoResPet>
   ) {
     const { pet_id, adotante_id } = req.params;
-    const { success, message } = await this.repository
+    await this.repository
       .adotaPet(Number(pet_id), Number(adotante_id));
-    if (!success) {
-      return res.status(401).json({ error: message });
-    }
+
     return res.sendStatus(204);
   }
 

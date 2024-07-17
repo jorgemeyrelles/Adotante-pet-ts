@@ -9,7 +9,7 @@ export default interface InterfacePetRepository {
   adotaPet(
     pet_id: number,
     adotante_id: number
-  ): Promise<{ success: boolean; message?: string }> | void;
+  ): void;
   buscaPetPeloPorte(porte: EnumPorte): Promise<PetEntity[]> | void;
   // busca generica
   buscaPetPorCampoGenerico<Tipo extends keyof PetEntity>(

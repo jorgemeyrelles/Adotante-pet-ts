@@ -15,7 +15,7 @@ export default class AdotanteRepository implements InterfaceAdotanteRepository {
   async atualizaAdotante(
     id: number,
     newData: AdotanteEntity
-  ): Promise<{ success: boolean; message?: string }> {
+  ) {
     const adotanteToUpdate = await this.repository.findOne({ where: { id } });
     if (!adotanteToUpdate) {
       throw new NotFound("Adotante não encontrado");
@@ -28,7 +28,7 @@ export default class AdotanteRepository implements InterfaceAdotanteRepository {
   }
   async deletaAdotante(
     id: number
-  ): Promise<{ success: boolean; message?: string }> {
+  ) {
     const adotanteToDelete = await this.repository.findOne({ where: { id } });
 
     if (!adotanteToDelete) {
@@ -41,7 +41,7 @@ export default class AdotanteRepository implements InterfaceAdotanteRepository {
   async atualizaEnderecoAdotante(
     idAdotante: number,
     endereco: EnderecoEntity
-  ): Promise<{ success: boolean; message?: string; }> {
+  ) {
     const adotante = await this.repository.findOne({ where: { id: idAdotante } });
     
     if (!adotante) {
