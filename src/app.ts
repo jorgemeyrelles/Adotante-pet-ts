@@ -8,6 +8,7 @@ import { errorMiddleware } from "./middleware/error";
 const app = express();
 app.use(express.json());
 router(app);
+console.log(process.env);
 
 app.get("/teste", () => {
   throw new Error("Erro teste");

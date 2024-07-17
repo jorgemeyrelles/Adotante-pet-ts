@@ -2,13 +2,14 @@ import { DataSource } from "typeorm";
 import PetEntity from "../entities/PetEntity";
 import AdotanteEntity from "../entities/AdotanteEntity";
 import EnderecoEntity from "../entities/EnderecoEntity";
+import { env } from "../../env";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
   host: "localhost",
   port: 3306,
   username: "root",
-  password: "Jl!24453687",
+  password: "******",
   database: "bd_alura_typescript",
   synchronize: true,
   logging: true,
