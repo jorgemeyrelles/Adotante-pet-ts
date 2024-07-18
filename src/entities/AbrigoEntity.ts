@@ -5,14 +5,12 @@ import { criptografarSenha } from "../utils/criptoSenha";
 @Entity()
 export default class AbrigoEntity {
   constructor(
-    id: number,
     nome: string,
     email: string,
     senha: string,
     celular: string,
-    endereco: EnderecoEntity
+    endereco?: EnderecoEntity
   ) {
-    this.id = id;
     this.nome = nome;
     this.email = email;
     this.senha = senha;

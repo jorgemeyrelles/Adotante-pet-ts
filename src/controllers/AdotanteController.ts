@@ -57,7 +57,7 @@ export default class AdotanteController {
         endereco: endereco === null ? undefined : endereco
       }));
     return res.status(200).json({ data: all });
-  }
+  };
   async atualizaAdotante(
     req: Request<TipoReqParamsAdotante, {}, TipoReqBodyAdotante>,
     res: Response<TipoResBodyAdotante>
