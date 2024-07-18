@@ -11,7 +11,6 @@ export default class PetEntity {
     especie: EnumEspecie,
     dataNascimento: Date,
     adotado: boolean,
-    abrigo?: AbrigoEntity,
     porte?: EnumPorte,
     adotante?: AdotanteEntity,
   ) {
@@ -20,7 +19,6 @@ export default class PetEntity {
     this.especie = especie;
     this.porte = porte;
     this.nome = nome;
-    this.abrigo = abrigo;
     this.adotante = adotante;
   }
   @PrimaryGeneratedColumn()
@@ -33,13 +31,8 @@ export default class PetEntity {
   porte?: EnumPorte;
   @Column()
   dataNascimento: Date;
-  @OneToOne(() => AbrigoEntity, {
-    nullable: true,
-    cascade: true,
-    eager: true
-  })
-  @JoinColumn()
-  abrigo?: AbrigoEntity;
+  @ManyToOne(() => AbrigoEntity, (abrigo) => abrigo.pets)
+  abrigo!: AbrigoEntity;
   @Column()
   adotado: boolean;
   @ManyToOne(() => AdotanteEntity, (adotante) => adotante.pets)

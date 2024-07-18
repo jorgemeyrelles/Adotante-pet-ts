@@ -7,6 +7,7 @@ import {
   TipoReqParamsAdotante,
   TipoResBodyAdotante
 } from "../types/TipoAdotante";
+import { EnumHttpStatusCode } from "../enum/EnumHttpStatusCode";
 
 export default class AdotanteController {
   constructor(private repository: AdotanteRepository) {}
@@ -67,7 +68,7 @@ export default class AdotanteController {
     await this.repository
       .atualizaAdotante(Number(id), <AdotanteEntity>req.body);
 
-    return res.sendStatus(204);
+    return res.sendStatus(EnumHttpStatusCode.OK);
   }
   async deleteAdotante(
     req: Request<TipoReqParamsAdotante, {}, TipoReqBodyAdotante>,
@@ -76,7 +77,7 @@ export default class AdotanteController {
     const { id } = req.params;
     await this.repository.deletaAdotante(Number(id));
 
-    return res.sendStatus(204);
+    return res.sendStatus(EnumHttpStatusCode.OK);
   }
   async atualizaEnderecoAdotante(
     req: Request<TipoReqParamsAdotante, {}, EnderecoEntity>,
@@ -87,6 +88,6 @@ export default class AdotanteController {
     await this.repository
       .atualizaEnderecoAdotante(Number(id), req.body);
 
-    return res.sendStatus(204);
+    return res.sendStatus(EnumHttpStatusCode.OK);
   }
 }

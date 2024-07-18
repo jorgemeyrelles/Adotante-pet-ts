@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import EnderecoEntity from "./EnderecoEntity";
 import { criptografarSenha } from "../utils/criptoSenha";
+import PetEntity from "./PetEntity";
 
 @Entity()
 export default class AbrigoEntity {
@@ -49,4 +50,6 @@ export default class AbrigoEntity {
   })
   @JoinColumn()
   endereco?: EnderecoEntity;
+  @OneToMany(() => PetEntity, (pet) => pet.abrigo)
+  pets!: PetEntity[];
 }

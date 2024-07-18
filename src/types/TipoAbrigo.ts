@@ -1,6 +1,6 @@
 import AbrigoEntity from '../entities/AbrigoEntity';
 
-type TipoReqBodyAbrigo = Omit<AbrigoEntity, "id">;
+type TipoReqBodyAbrigo = Omit<AbrigoEntity, "id" | "pets">;
 
 type TipoReqParamsAbrigo = { id?: string };
 

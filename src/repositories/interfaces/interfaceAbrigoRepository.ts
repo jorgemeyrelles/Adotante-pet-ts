@@ -1,5 +1,6 @@
 import AbrigoEntity from "../../entities/AbrigoEntity";
 import EnderecoEntity from "../../entities/EnderecoEntity";
+import PetEntity from "../../entities/PetEntity";
 
 export default interface InterfaceAbrigoRepository {
   criaAbrigo(abrigo: AbrigoEntity): void | Promise<void>;
@@ -12,5 +13,9 @@ export default interface InterfaceAbrigoRepository {
   atualizaEnderecoAbrigo(
     idAbrigo: number,
     endereco: EnderecoEntity
+  ): void;
+  atualizaPetAbrigo(
+    idAbrigo: number,
+    pet: PetEntity
   ): void;
 }

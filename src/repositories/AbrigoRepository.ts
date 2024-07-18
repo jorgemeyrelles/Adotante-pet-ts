@@ -2,7 +2,7 @@ import { Repository } from "typeorm";
 import AbrigoEntity from "../entities/AbrigoEntity";
 import EnderecoEntity from "../entities/EnderecoEntity";
 import InterfaceAbrigoRepository from "./interfaces/interfaceAbrigoRepository";
-import { NotFound } from "../utils/manipulaErrors";
+import { NotFound, ReqRuim } from "../utils/manipulaErrors";
 import PetEntity from "../entities/PetEntity";
 
 export default class AbrigoRepository implements InterfaceAbrigoRepository {
@@ -13,8 +13,18 @@ export default class AbrigoRepository implements InterfaceAbrigoRepository {
     this.petRepository = petRepository;
     this.abrigoRepository = abrigoRepository;
   };
-  criaAbrigo(abrigo: AbrigoEntity): void | Promise<void> {
-    this.abrigoRepository.save(abrigo);
+
+  private async existeAbrigo(celular: string) {
+    const abrigo = await this.abrigoRepository.findOne({ where: { celular } });
+    return !!abrigo;
+  };
+
+  async criaAbrigo(abrigo: AbrigoEntity): Promise<void> {
+    const existeAbrigo = await this.existeAbrigo(abrigo.celular);
+    if (existeAbrigo) {
+      throw new ReqRuim("Já existe um abrigo com esse celular");
+    }
+    await this.abrigoRepository.save(abrigo);
   }
   async listaAbrigo(): Promise<AbrigoEntity[]> {
     return await this.abrigoRepository.find();
