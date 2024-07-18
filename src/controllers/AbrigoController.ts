@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import AbrigoRepository from "../repositories/AbrigoRepository";
 import AbrigoEntity from "../entities/AbrigoEntity";
+import { TipoReqBodyAbrigo, TipoReqParamsAbrigo, TipoResBodyAbrigo } from "../types/TipoAbrigo";
+import EnderecoEntity from "../entities/EnderecoEntity";
 
 export default class AbrigoController {
   constructor(private repository: AbrigoRepository) {};
   async criaAbrigo(
-    req: Request,
-    res: Response
+    req: Request<{}, {}, TipoReqBodyAbrigo>,
+    res: Response<TipoResBodyAbrigo>
   ) {
     const {
       nome,
@@ -39,7 +41,7 @@ export default class AbrigoController {
 
   async listaAbrigo(
     req: Request,
-    res: Response
+    res: Response<TipoResBodyAbrigo>
   ) {
     const abrigos = await this.repository.listaAbrigo();
 
@@ -56,8 +58,8 @@ export default class AbrigoController {
   };
 
   async atualizaAbrigo(
-    req: Request,
-    res: Response
+    req: Request<TipoReqParamsAbrigo, {}, TipoReqBodyAbrigo>,
+    res: Response<TipoResBodyAbrigo>
   ) {
     const { id } = req.params;
 
@@ -68,8 +70,8 @@ export default class AbrigoController {
   };
 
   async deleteAbrigo(
-    req: Request,
-    res: Response
+    req: Request<TipoReqParamsAbrigo, {}, {}>,
+    res: Response<TipoResBodyAbrigo>
   ) {
     const { id } = req.params;
 
@@ -79,8 +81,8 @@ export default class AbrigoController {
   };
 
   async atualizaEnderecoAbrigo(
-    req: Request,
-    res: Response
+    req: Request<TipoReqParamsAbrigo, {}, EnderecoEntity>,
+    res: Response<TipoResBodyAbrigo>
   ) {
     const { id } = req.params;
 
