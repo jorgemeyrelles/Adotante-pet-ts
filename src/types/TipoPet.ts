@@ -13,8 +13,8 @@ type TipoReqParamsPet = {
 
 type TipoResPet = {
   data?:
-    Pick<PetEntity, "id" | "nome" | "porte" | "especie">
-    | Pick<PetEntity, "id" | "nome" | "porte" | "especie">[];
+    Pick<PetEntity, "id" | "nome" | "porte" | "especie" | "abrigo">
+    | Pick<PetEntity, "id" | "nome" | "porte" | "especie" | "abrigo">[];
 }
 
 export {

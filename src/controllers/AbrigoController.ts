@@ -3,6 +3,7 @@ import AbrigoRepository from "../repositories/AbrigoRepository";
 import AbrigoEntity from "../entities/AbrigoEntity";
 import { TipoReqBodyAbrigo, TipoReqParamsAbrigo, TipoResBodyAbrigo } from "../types/TipoAbrigo";
 import EnderecoEntity from "../entities/EnderecoEntity";
+import PetEntity from "../entities/PetEntity";
 
 export default class AbrigoController {
   constructor(private repository: AbrigoRepository) {};
@@ -88,6 +89,18 @@ export default class AbrigoController {
 
     await this.repository
       .atualizaEnderecoAbrigo(Number(id), req.body);
+
+    return res.sendStatus(204);
+  };
+
+  async atualizaPetAbrigo(
+    req: Request<TipoReqParamsAbrigo, {}, PetEntity>,
+    res: Response<TipoResBodyAbrigo>
+  ) {
+    const { id } = req.params;
+
+    await this.repository
+      .atualizaPetAbrigo(Number(id), req.body);
 
     return res.sendStatus(204);
   };

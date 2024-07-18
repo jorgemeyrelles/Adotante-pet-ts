@@ -18,9 +18,23 @@ export default class PetController {
     req: Request<TipoReqParamsPet, {}, TipoReqBodyPet>,
     res: Response<TipoResPet>
   ) {
-    const { adotado, especie, porte, dataNascimento, nome } = <PetEntity>req.body;
+    const {
+      adotado,
+      especie,
+      porte,
+      dataNascimento,
+      nome,
+      abrigo
+    } = <PetEntity>req.body;
 
-    const novoPet = new PetEntity(nome, especie, dataNascimento, adotado, porte);
+    const novoPet = new PetEntity(
+      nome,
+      especie,
+      dataNascimento,
+      adotado,
+      abrigo,
+      porte
+    );
 
     await this.repository.criaPet(novoPet);
     return res.status(201).json({ data: novoPet });
@@ -69,6 +83,7 @@ export default class PetController {
     res: Response<TipoResPet>
   ) {
     const { pet_id, adotante_id } = req.params;
+    
     await this.repository
       .adotaPet(Number(pet_id), Number(adotante_id));
 

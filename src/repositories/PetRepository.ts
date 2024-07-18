@@ -15,14 +15,14 @@ export default class PetRepository implements InterfacePetRepository {
   ) {
     this.petRepository = petRepository;
     this.adotanteRepository = adotanteRepository;
-  }
+  };
   async criaPet(pet: PetEntity): Promise<void> {
     await this.petRepository.save(pet);
-  }
+  };
   async listaPet(): Promise<PetEntity[]> {
     const all = await this.petRepository.find();
     return all;
-  }
+  };
   async atualizaPet(id: number, newData: PetEntity) {
     const petToUpdate = await this.petRepository.findOne({ where: { id } });
 
@@ -35,7 +35,7 @@ export default class PetRepository implements InterfacePetRepository {
     await this.petRepository.save(petToUpdate);
 
     return { success: true };
-  }
+  };
   async deletePet(id: number, pet: PetEntity) {
     const petToRemove = await this.petRepository.findOne({ where: { id } });
 
@@ -45,7 +45,7 @@ export default class PetRepository implements InterfacePetRepository {
 
     await this.petRepository.remove(petToRemove);
     return { success: true };
-  }
+  };
   async adotaPet(
     pet_id: number,
     adotante_id: number
@@ -58,17 +58,17 @@ export default class PetRepository implements InterfacePetRepository {
     if (!adotante) {
       throw new NotFound("Adotante não encontrado");
     }
-    
+
     pet.adotante = adotante;
     pet.adotado = true;
-    
+
     await this.petRepository.save(pet);
     return { success: true };
-  }
+  };
   async buscaPetPeloPorte(porte: EnumPorte): Promise<PetEntity[]> {
     const pets = await this.petRepository.find({ where: { porte } });
     return pets;
-  }
+  };
 
   async buscaPetPorCampoGenerico<Tipo extends keyof PetEntity>(
     campo: Tipo,
@@ -76,5 +76,5 @@ export default class PetRepository implements InterfacePetRepository {
   ): Promise<PetEntity[]> {
     const pets = await this.petRepository.find({ where: { [campo]: valor } });
     return pets;
-  }
+  };
 }

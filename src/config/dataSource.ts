@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import PetEntity from "../entities/PetEntity";
 import AdotanteEntity from "../entities/AdotanteEntity";
 import EnderecoEntity from "../entities/EnderecoEntity";
+import AbrigoEntity from "../entities/AbrigoEntity";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -12,7 +13,12 @@ export const AppDataSource = new DataSource({
   database: "bd_alura_typescript",
   synchronize: true,
   logging: true,
-  entities: [PetEntity, AdotanteEntity, EnderecoEntity],
+  entities: [
+    PetEntity,
+    AdotanteEntity,
+    EnderecoEntity,
+    AbrigoEntity
+  ],
   subscribers: [],
   migrations: [],
 });
